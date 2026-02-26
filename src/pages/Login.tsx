@@ -16,7 +16,7 @@ const Login = () => {
     const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:3000/api/auth/login", {email, password});
+            const response = await axios.post("https://ems-server-cyan.vercel.app/api/auth/login", {email, password});
             if(response.data.success) {
                 console.log("Successfully Logged In")
                 login(response.data.user)
