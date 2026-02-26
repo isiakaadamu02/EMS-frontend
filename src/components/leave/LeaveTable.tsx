@@ -14,7 +14,7 @@ const LeaveTable = () => {
         const token = localStorage.getItem("token")
          try {
             
-            const response = await axios.get("http://localhost:3000/api/leave", {
+            const response = await axios.get("https://ems-server-cyan.vercel.app/api/leave", {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }

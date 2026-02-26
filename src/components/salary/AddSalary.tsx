@@ -61,7 +61,7 @@ const AddSalary = () => {
 
         const token = localStorage.getItem("token")
             try {
-                const response = await axios.post(`http://localhost:3000/api/salary/add`, salary, {
+                const response = await axios.post(`https://ems-server-cyan.vercel.app/api/salary/add`, salary, {
                     headers: {
                         "Authorization" : `Bearer ${token}` 
                     }

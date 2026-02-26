@@ -27,7 +27,7 @@ const AddLeave = () => {
          const token = localStorage.getItem("token")
         try {
             // Fetch employee data from API and set it to state
-            const response = await axios.post(`http://localhost:3000/api/leave/add`, leave, {
+            const response = await axios.post(`https://ems-server-cyan.vercel.app/api/leave/add`, leave, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }

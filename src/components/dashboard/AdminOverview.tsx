@@ -23,7 +23,7 @@ const AdminOverview = () => {
         const fetchSummary = async () => {
         const token = localStorage.getItem("token")
         try {
-            const resp = await axios.get("http://localhost:3000/api/dashboard/summary", {
+            const resp = await axios.get("https://ems-server-cyan.vercel.app/api/dashboard/summary", {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }

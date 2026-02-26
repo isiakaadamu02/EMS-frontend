@@ -28,7 +28,7 @@ const AuthContext = ({children}: {children: ReactNode}) => {
         const verifyUser = async () => {
             const token = localStorage.getItem("token")
             try {
-                const response = await axios.get("http://localhost:3000/api/auth/verify", {
+                const response = await axios.get("https://ems-server-cyan.vercel.app/api/auth/verify", {
                     headers: {
                         "Authorization" : `Bearer ${token}` 
                     }

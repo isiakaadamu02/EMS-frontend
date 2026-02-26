@@ -27,7 +27,7 @@ const Setting = () => {
         } else {
             const token = localStorage.getItem("token")
             try {
-                 const response = await axios.put(`http://localhost:3000/api/setting/change-password`, setting, {
+                 const response = await axios.put(`https://ems-server-cyan.vercel.app/api/setting/change-password`, setting, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }

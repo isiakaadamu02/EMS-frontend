@@ -15,7 +15,7 @@ const EditDepartment = () => {
         const token = localStorage.getItem("token")
         try {
             // Fetch department data from API and set it to state
-            const response = await axios.get(`http://localhost:3000/api/department/get/${id}`, {
+            const response = await axios.get(`https://ems-server-cyan.vercel.app/api/department/get/${id}`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -46,7 +46,7 @@ const EditDepartment = () => {
         console.log(department);
     const token = localStorage.getItem("token")
         try {
-            const response = await axios.put(`http://localhost:3000/api/department/edit/${id}`, department, {
+            const response = await axios.put(`https://ems-server-cyan.vercel.app/api/department/edit/${id}`, department, {
                 headers: {
                     "Authorization" : `Bearer ${token}`,
                 },

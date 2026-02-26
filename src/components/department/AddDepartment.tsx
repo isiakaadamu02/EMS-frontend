@@ -22,7 +22,7 @@ const AddDepartment = () => {
 
          const token = localStorage.getItem("token")
             try {
-                const response = await axios.post("http://localhost:3000/api/department/add", department, {
+                const response = await axios.post("https://ems-server-cyan.vercel.app/api/department/add", department, {
                     headers: {
                         "Authorization" : `Bearer ${token}` 
                     }

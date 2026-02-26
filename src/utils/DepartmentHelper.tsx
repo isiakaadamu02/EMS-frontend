@@ -27,7 +27,7 @@ export const DepartmentButtons = ({_id, onDepartmentDelete}: any) => {
         if(!confirmDelete) return;
         try {
             // Fetch department data from API and set it to state
-            const response = await axios.delete(`http://localhost:3000/api/department/delete/${id}`, {
+            const response = await axios.delete(`https://ems-server-cyan.vercel.app/api/department/delete/${id}`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }

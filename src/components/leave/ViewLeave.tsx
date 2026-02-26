@@ -60,7 +60,7 @@ const ViewLeave = () => {
     const changeStatus = async (id: string, status: any)  => {
         try {
              const token = localStorage.getItem("token")
-            const response = await axios.put(`http://localhost:3000/api/leave/${id}`, {status}, {
+            const response = await axios.put(`https://ems-server-cyan.vercel.app/api/leave/${id}`, {status}, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }

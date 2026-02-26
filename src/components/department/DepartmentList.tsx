@@ -25,7 +25,7 @@ const DepartmentList = () => {
         const token = localStorage.getItem("token")
         try {
             // Fetch department data from API and set it to state
-            const response = await axios.get("http://localhost:3000/api/department", {
+            const response = await axios.get("https://ems-server-cyan.vercel.app/api/department", {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }

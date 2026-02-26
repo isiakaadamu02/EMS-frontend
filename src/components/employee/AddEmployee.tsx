@@ -78,7 +78,7 @@ const AddEmployee = () => {
 
         const token = localStorage.getItem("token")
             try {
-                const response = await axios.post("http://localhost:3000/api/employee/add", formDataObj, {
+                const response = await axios.post("https://ems-server-cyan.vercel.app/api/employee/add", formDataObj, {
                     headers: {
                         "Authorization" : `Bearer ${token}` 
                     }
@@ -94,7 +94,7 @@ const AddEmployee = () => {
         }
     }
 
-    // console.log("🎯 Current departments:", departments); // Debug log
+    // console.log("Current departments:", departments); // Debug log
 
   return (
     <div className="max-w-4xl mx-auto mt-10 bg-white p-8 rounded-md shadow-md">
