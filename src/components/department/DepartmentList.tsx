@@ -37,6 +37,7 @@ const DepartmentList = () => {
                         _id: dep._id,
                         sno: sno++,
                         dep_name: dep.dep_name,
+                        desc: dep.description,
                         action: (<DepartmentButtons _id={dep._id} onDepartmentDelete={onDepartmentDelete} />),
                     }
                 ))

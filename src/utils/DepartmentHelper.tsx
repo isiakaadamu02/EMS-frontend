@@ -13,6 +13,11 @@ export const columns = [
         sortable: true,
     },
     {
+        name: "Description",
+        selector: (row: any) => row.description,
+        sortable: true,
+    },
+    {
         name: "Action",
         selector: (row: any) => row.action,
     }
