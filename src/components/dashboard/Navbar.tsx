@@ -8,8 +8,8 @@ const Navbar = () => {
 
     return (
         <div className="flex justify-between h-12 bg-[#ff8349] px-5">
-            <p>Welcome {user?.name}</p>
-            <button className="px-4 py-1 bg-[#ff8349] hover:bg-[#ff8349]" onClick={logout}>Logout</button>
+            <p className=" px-0 py-3 text-white">Welcome {user?.name}</p>
+            <button className="px-4 py-1 bg-[#ff8349] hover:bg-[#ff8349] text-white" onClick={logout}>Logout</button>
         </div>
     )
 }

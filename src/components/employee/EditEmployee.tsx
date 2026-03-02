@@ -10,7 +10,7 @@ const EditEmployee = () => {
     const {id} = useParams();
     const [employee, setEmployee] = useState<Employee | null>(null);
     const [departments, setDepartments] = useState<any[]>([])
-    // const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
      useEffect(() => {
             const getDepartments = async () => {
@@ -41,7 +41,9 @@ const EditEmployee = () => {
                 if(axios.isAxiosError(error) && error.response && !error.response.data.error) {
                     alert(error.response.data.error)
                 }
-        } 
+        } finally {
+            setLoading(false);
+        }
     }
     fetchEmployees();
     }, [])
@@ -173,7 +175,7 @@ const EditEmployee = () => {
 
             </div>
 
-            <button type="submit" className="mt-6 bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 font-bold py-2 ">Edit Employee</button>
+            <button type="submit" disabled={loading} className="mt-6 bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 font-bold py-2 cursor-pointer">{loading ? "Loading" : "Edit Employee"}</button>
 
         </form>
       

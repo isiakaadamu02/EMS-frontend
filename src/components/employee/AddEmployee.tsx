@@ -8,6 +8,7 @@ import type { EmployeeFormData } from "../../interface"
 const AddEmployee = () => {
     const navigate = useNavigate();
     const [departments, setDepartments] = useState<any[]>([])
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState<EmployeeFormData>({
         name: "",
     email: "",
@@ -60,6 +61,7 @@ const AddEmployee = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const formDataObj = new FormData()
+        setLoading(true);
 
         // Object.keys(formData).forEach((key) => {
         //     formDataObj.append(key, formData[key])
@@ -91,7 +93,9 @@ const AddEmployee = () => {
                 if(axios.isAxiosError(error) && error.response && !error.response.data.error) {
                     alert(error.response.data.error)
                 }
-        }
+        }finally {
+        setLoading(false); // Set loading to false when done (success or error)
+    }
     }
 
     // console.log("Current departments:", departments); // Debug log
@@ -190,7 +194,7 @@ const AddEmployee = () => {
 
             </div>
 
-            <button type="submit" className="mt-6 bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 font-bold py-2 ">Add Employee</button>
+            <button type="submit" disabled={loading} className="mt-6 bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 font-bold py-2 cursor-pointer">{loading ? "Loading" : "Add Employee"}</button>
 
         </form>
       

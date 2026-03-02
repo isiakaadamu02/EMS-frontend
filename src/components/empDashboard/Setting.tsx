@@ -13,6 +13,7 @@ const Setting = () => {
         newPassword: "",
         confirmPassword: "",
     });
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -22,6 +23,7 @@ const Setting = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
+        setLoading(true)
         if (setting.newPassword !== setting.confirmPassword) {
             setError("Password not matched")
         } else {
@@ -42,6 +44,8 @@ const Setting = () => {
                 if(axios.isAxiosError(error) && error.response && !error.response.data.error) {
                     alert(error.response.data.error)
                 }
+            } finally {
+                setLoading(false)
             }
         }
     }
@@ -73,7 +77,7 @@ const Setting = () => {
             </div>
            
 
-            <button type="submit" className="mt-6 bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 font-bold py-2 px-4">Change Password</button>
+            <button type="submit" disabled={loading} className="mt-6 bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 font-bold py-2 px-4 cursor-pointer">{loading ? "Loading" : "Change Password"}</button>
 
         </form>
       

@@ -3,7 +3,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 
 const AddDepartment = () => {
-
+    const [loading, setLoading] = useState(false);
     const [department, setDepartment] = useState({
         dep_name: "",
         description: ""
@@ -19,6 +19,7 @@ const AddDepartment = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(department);
+        setLoading(true)
 
          const token = localStorage.getItem("token")
             try {
@@ -35,7 +36,9 @@ const AddDepartment = () => {
                 if(axios.isAxiosError(error) && error.response && !error.response.data.error) {
                     alert(error.response.data.error)
                 }
-        }
+        } finally {
+        setLoading(false); 
+    }
     }
   return (
     <div className="max-w-3xl mx-auto mt-10 bg-white p-8 rounded-md shadow-md w-96">
@@ -53,7 +56,7 @@ const AddDepartment = () => {
                 <textarea name="description" placeholder="Description" onChange={handleChange} className="mt-1 block w-full p-2 border border-gray-300 rounded-md" rows={4}/>
             </div>
 
-            <button type="submit" className="w-full mt-6 hover:bg-[#ff8349] text-white font-bold py-2 px-4 rounded-md">Add Department</button>
+            <button type="submit" disabled={loading} className="w-full mt-6 bg-[#ff8349] hover:bg-[#ff8349] text-white font-bold py-2 px-4 rounded-md cursor-pointer">{loading ? "Loading" : "Add Department"}</button>
         </form>
       
     </div>

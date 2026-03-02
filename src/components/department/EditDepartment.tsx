@@ -6,6 +6,7 @@ const EditDepartment = () => {
     const {id} = useParams(); //to get id from URL
     const [department, setDepartment] = useState<{ dep_name?: string; description?: string } | null>(null)
     const [depLoading, setDepLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -44,6 +45,7 @@ const EditDepartment = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(department);
+        setLoading(true)
     const token = localStorage.getItem("token")
         try {
             const response = await axios.put(`https://ems-server-cyan.vercel.app/api/department/edit/${id}`, department, {
@@ -58,7 +60,9 @@ const EditDepartment = () => {
             if(axios.isAxiosError(error) && error.response && !error.response.data.error) {
                     alert(error.response.data.error)
                 }
-        }
+        } finally {
+        setLoading(false); 
+    }
     }
 
   return (
@@ -79,7 +83,7 @@ const EditDepartment = () => {
                 <textarea name="description" placeholder="Description" onChange={handleChange} value={department?.description || ""} className="mt-1 block w-full p-2 border border-gray-300 rounded-md" rows={4}/>
             </div>
 
-            <button type="submit" className="w-full mt-6 hover:bg-[#ff8349] text-white font-bold py-2 px-4 rounded-md">Edit Department</button>
+            <button type="submit" disabled={loading} className="w-full mt-6 bg-[#ff8349] hover:bg-[#ff8349] text-white font-bold py-2 px-4 rounded-md cursor-pointer">{loading ? "Loading" : "Edit Department"}</button>
         </form>
       
     </div>

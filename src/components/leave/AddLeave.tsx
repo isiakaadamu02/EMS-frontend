@@ -9,7 +9,7 @@ const AddLeave = () => {
     const {user} = useAuth()
     // const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-
+    const [loading, setLoading] = useState(false);
     const [leave, setLeave] = useState({
         userId: user?._id
     })
@@ -23,7 +23,7 @@ const AddLeave = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault()
-
+        setLoading(true)
          const token = localStorage.getItem("token")
         try {
             // Fetch employee data from API and set it to state
@@ -41,7 +41,9 @@ const AddLeave = () => {
                 if(axios.isAxiosError(error) && error.response && !error.response.data.error) {
                     alert(error.response.data.error)
                 }
-        }
+        } finally {
+                setLoading(false)
+            }
     }
     
   return (
@@ -78,7 +80,7 @@ const AddLeave = () => {
             </div>
         </div>
 
-        <button type="submit" className="w-full mt-6 bg-[#ff8349] hover:bg-[#ff8349] text-white font-bold py-2 px-4 rounded-md">Add Leave</button>
+        <button type="submit" disabled={loading} className="w-full mt-6 bg-[#ff8349] hover:bg-[#ff8349] text-white font-bold py-2 px-4 rounded-md cursor-pointer">{loading ? "Loading" : "Add Leave"}</button>
       </form>
     </div>
   )

@@ -24,7 +24,7 @@ const AddSalary = () => {
         deductions: 0,
         payDate: "",
     });
-
+    const [loading, setLoading] = useState(false);
     const [departments, setDepartments] = useState<SalaryDepartment[]>([]);
     const [employees, setEmployees] = useState<SalaryEmployee[]>([]);
     const navigate = useNavigate();
@@ -58,7 +58,7 @@ const AddSalary = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-
+        setLoading(true)
         const token = localStorage.getItem("token")
             try {
                 const response = await axios.post(`https://ems-server-cyan.vercel.app/api/salary/add`, salary, {
@@ -75,9 +75,9 @@ const AddSalary = () => {
                     alert(error.response.data.error)
                 }
         } 
-        // finally {
-        //         setLoading(false)
-        //     }
+        finally {
+                setLoading(false)
+            }
     }
 
 
@@ -137,7 +137,7 @@ const AddSalary = () => {
 
             </div>
 
-            <button type='submit' className='mt-6 bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 font-bold py-2'>Add Salary Record</button>
+            <button type='submit' disabled={loading} className='mt-6 bg-[#ff8349] hover:bg-[#ff8349] text-white p-2 rounded-md font-bold py-2 cursor-pointer'>{loading ? "Loading" : "Add Salary Record"}</button>
 
         </form>
     </div>
