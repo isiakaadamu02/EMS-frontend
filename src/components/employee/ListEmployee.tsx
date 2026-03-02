@@ -27,10 +27,10 @@ const ListEmployee = () => {
                     {
                         _id: empl._id,
                         sno: sno++,
-                        dep_name: empl.department.dep_name,
+                        dep_name: empl.department?.dep_name || "Null",
                         name: empl.userId.name,
                         dob: new Date(empl.dob).toDateString(),
-                        profileImage: <img width={40} className="rounded-full" src={`http://localhost:3000/${empl.userId.profileImage}`} /> , 
+                        profileImage: <img width={40} className="rounded-full" src={`https://ems-server-cyan.vercel.app/${empl.userId.profileImage}`} /> , 
                         action: (<EmployeeButtons _id={empl._id} />),
                     }
                 ))
