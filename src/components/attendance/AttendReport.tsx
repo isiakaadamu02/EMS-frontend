@@ -19,6 +19,8 @@ const AttendReport = () => {
     const [dateFilter, setDateFilter] = useState<string>("")
     const [loading, setLoading] = useState(false);
 
+    console.log(setLimit)
+
     const fetchReport = async () => {
         
         const token = localStorage.getItem("token")
