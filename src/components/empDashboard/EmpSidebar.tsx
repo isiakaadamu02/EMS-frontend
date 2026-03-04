@@ -34,6 +34,8 @@ const EmpSidebar = () => {
                     <span>Salary</span>
                 </NavLink>
 
+                
+
                 <NavLink to="/employee-dashboard/setting" className={({isActive}) => `${isActive ? "bg-[#ff8349]" : "text-gray-500"} flex items-center space-x-4 py-2.5 px-4 rounded `}>
                     <FaTachometerAlt />
                     <span>Settings</span>

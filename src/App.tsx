@@ -21,6 +21,8 @@ import AddLeave from './components/leave/AddLeave'
 import Setting from './components/empDashboard/Setting'
 import LeaveTable from './components/leave/LeaveTable'
 import ViewLeave from './components/leave/ViewLeave'
+import Attendance from './components/attendance/Attendance'
+import AttendReport from './components/attendance/AttendReport'
 
 function App() {
 
@@ -51,11 +53,14 @@ function App() {
           <Route path='/admin-dashboard/leaves' element={<LeaveTable />}></Route>
           <Route path='/admin-dashboard/leaves/:id' element={<ViewLeave />}></Route>
           <Route path='/admin-dashboard/employees/leaves/:id' element={<LeaveList />}></Route>
-
-          <Route path='/admin-dashboard/setting' element={<Setting />}></Route>
-
+          
           <Route path='/admin-dashboard/add-salary' element={<AddSalary />}></Route>
           <Route path='/admin-dashboard/employees/salary/:id' element={<ViewSalary />}></Route>
+
+          <Route path='/admin-dashboard/attendance' element={<Attendance />}></Route>
+          <Route path='/admin-dashboard/attendance-report' element={<AttendReport />}></Route>
+
+          <Route path='/admin-dashboard/setting' element={<Setting />}></Route>
         </Route>
       <Route path='/employee-dashboard' 
         element={<PrivateRoutes>
