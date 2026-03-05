@@ -51,7 +51,18 @@ const ViewEmployee = () => {
         <h2 className="text-2xl font-bold mb-8 text-center">Employee Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-2">
             <div>
-                <img src={`http://localhost:3000/${employee.userId.profileImage}`} alt="profile" className="rounded-full border w-72"/>
+                {/* <img src={`https://ems-server-cyan.vercel.app/${employee.userId.profileImage}`} alt="profile" className="rounded-full border w-72"/> */}
+
+                <img 
+                    src={employee.userId.profileImage || ''} 
+                    alt="profile" className="rounded-full border w-72" 
+                    onError={(e) => {
+                        e.currentTarget.style.display = 'none'; // Fallback if image fails to load
+                    }}
+                    onLoad={(e) => {
+                        e.currentTarget.style.display = 'block';
+                    }}
+                />
             </div>
         </div>
       <div>

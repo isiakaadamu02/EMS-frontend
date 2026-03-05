@@ -30,7 +30,25 @@ const ListEmployee = () => {
                         dep_name: empl.department?.dep_name || "Null",
                         name: empl.userId.name,
                         dob: new Date(empl.dob).toDateString(),
-                        profileImage: <img width={40} className="rounded-full" src={`https://ems-server-cyan.vercel.app/${empl.userId.profileImage}`} /> , 
+                        // profileImage: <img width={40} className="rounded-full" src={`https://ems-server-cyan.vercel.app/${empl.userId.profileImage}`} /> ,
+                         //Using profileImage directly (it's the full Cloudinary URL)
+                        profileImage: empl.userId.profileImage ? (
+                            <img 
+                                width={40} 
+                                height={40}
+                                className="rounded-full object-cover" 
+                                src={empl.userId.profileImage}
+                                alt={empl.userId.name}
+                                onError={(e) => {
+                                    e.currentTarget.src = ''; // Clear broken image // Fallback
+                                    e.currentTarget.style.display = 'none'; // Hide it 
+                                }}
+                            />
+                        ) : (
+                            <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-sm">
+                                {empl.userId.name.charAt(0)}
+                            </div>
+                        ),
                         action: (<EmployeeButtons _id={empl._id} />),
                     }
                 ))

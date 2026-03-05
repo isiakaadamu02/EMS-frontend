@@ -6,11 +6,13 @@ export const columns = [
     {
         name: "S No",
         selector: (row: any) => row.sno,
+        width: "100px"
     },
     {
         name: "Department Name",
         selector: (row: any) => row.dep_name,
         sortable: true,
+        width: "200px"
     },
     {
         name: "Description",

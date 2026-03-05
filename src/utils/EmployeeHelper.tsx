@@ -11,7 +11,7 @@ export const empColumns = [
         name: "Name",
         selector: (row: any) => row.name,
         sortable: true,
-        width: "100px"
+        width: "150px"
     },
     {
         name: "Image",
@@ -23,7 +23,7 @@ export const empColumns = [
         name: "Department",
         selector: (row: any) => row.dep_name,
         sortable: true,
-        width: "120px"
+        width: "150px"
     },
     {
         name: "DOB",
