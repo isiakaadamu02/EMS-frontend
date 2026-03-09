@@ -19,7 +19,7 @@ const Attendance = () => {
         const token = localStorage.getItem("token")
         try {
             // Fetch department data from API and set it to state
-            const response = await axios.get(`http://localhost:3000/api/attendance?date=${selectedDate}`, {
+            const response = await axios.get(`https://ems-server-cyan.vercel.app/api/attendance?date=${selectedDate}`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }

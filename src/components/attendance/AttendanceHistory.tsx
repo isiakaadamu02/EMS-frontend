@@ -13,7 +13,7 @@ const AttendanceHistory = () => {
         setLoading(true);
         const token = localStorage.getItem("token");
         try {
-            const response = await axios.get("http://localhost:3000/api/attendance/history", {
+            const response = await axios.get("https://ems-server-cyan.vercel.app/api/attendance/history", {
                 headers: { "Authorization": `Bearer ${token}` }
             });
             

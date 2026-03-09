@@ -58,7 +58,7 @@ const AttendanceHelper = ({ status, employeeId, statusChange, date }: Attendance
     const markEmployee = async (status: string, employeeId: string, date: string) => {
         const token = localStorage.getItem("token")
         try {
-            const response = await axios.put(`http://localhost:3000/api/attendance/update/${employeeId}`, {status, date}, {
+            const response = await axios.put(`https://ems-server-cyan.vercel.app/api/attendance/update/${employeeId}`, {status, date}, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }

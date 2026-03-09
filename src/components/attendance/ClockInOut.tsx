@@ -24,7 +24,7 @@ const ClockInOut = () => {
     const fetchTodayAttendance = async () => {
         const token = localStorage.getItem("token");
         try {
-            const response = await axios.get("http://localhost:3000/api/attendance/today", {
+            const response = await axios.get("https://ems-server-cyan.vercel.app/api/attendance/today", {
                 headers: { "Authorization": `Bearer ${token}` }
             });
             
@@ -47,7 +47,7 @@ const ClockInOut = () => {
         setLoading(true);
         const token = localStorage.getItem("token");
         try {
-            const response = await axios.post("http://localhost:3000/api/attendance/clock-in", {}, {
+            const response = await axios.post("https://ems-server-cyan.vercel.app/api/attendance/clock-in", {}, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
 
@@ -69,7 +69,7 @@ const ClockInOut = () => {
         setLoading(true);
         const token = localStorage.getItem("token");
         try {
-            const response = await axios.post("http://localhost:3000/api/attendance/clock-out", {}, {
+            const response = await axios.post("https://ems-server-cyan.vercel.app/api/attendance/clock-out", {}, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
             

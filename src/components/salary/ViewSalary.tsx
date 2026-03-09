@@ -19,7 +19,7 @@ const ViewSalary = () => {
         const token = localStorage.getItem("token")
         try {
             // Fetch employee data from API and set it to state
-            const response = await axios.get(`http://localhost:3000/api/salary/${id}/${user?.role}`, {
+            const response = await axios.get(`https://ems-server-cyan.vercel.app/api/salary/${id}/${user?.role}`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }

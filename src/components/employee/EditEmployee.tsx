@@ -99,7 +99,7 @@ const EditEmployee = () => {
 
         const token = localStorage.getItem("token")
             try {
-                const response = await axios.put(`http://localhost:3000/api/employee/${id}`, updateData, {
+                const response = await axios.put(`https://ems-server-cyan.vercel.app/api/employee/${id}`, updateData, {
                     headers: {
                         "Authorization" : `Bearer ${token}` 
                     }
