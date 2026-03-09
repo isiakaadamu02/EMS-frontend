@@ -1,4 +1,4 @@
-import { FaBuilding, FaMoneyBillWave, FaTachometerAlt, FaUsers } from "react-icons/fa"
+import { FaBuilding, FaClock, FaHistory, FaMoneyBillWave, FaTachometerAlt, FaUsers } from "react-icons/fa"
 import { NavLink } from "react-router-dom"
 import { useAuth } from "../../context/authContext"
 
@@ -34,7 +34,15 @@ const EmpSidebar = () => {
                     <span>Salary</span>
                 </NavLink>
 
-                
+                <NavLink to={"/employee-dashboard/clock-in-out"} className={({isActive}) => `${isActive ? "bg-[#ff8349]" : "text-gray-500"} flex items-center space-x-4 py-2.5 px-4 rounded `}>
+                    <FaClock />
+                    <span>Clock In/Out</span>
+                </NavLink>
+
+                 <NavLink to={"/employee-dashboard/attendance-history"} className={({isActive}) => `${isActive ? "bg-[#ff8349]" : "text-gray-500"} flex items-center space-x-4 py-2.5 px-4 rounded `}>
+                    <FaHistory />
+                    <span>Attendance History</span>
+                </NavLink>
 
                 <NavLink to="/employee-dashboard/setting" className={({isActive}) => `${isActive ? "bg-[#ff8349]" : "text-gray-500"} flex items-center space-x-4 py-2.5 px-4 rounded `}>
                     <FaTachometerAlt />

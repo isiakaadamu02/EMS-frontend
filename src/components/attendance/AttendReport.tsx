@@ -93,10 +93,10 @@ const AttendReport = () => {
                 <th>Status</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody >
             {records.map((data, i) => (
                 
-                    <tr key={data.employeeId}>
+                    <tr key={data.employeeId} >
                         <td>{i + 1}</td>
                         
                         <td>{data.employeeId}</td>

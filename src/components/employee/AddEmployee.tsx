@@ -194,7 +194,7 @@ const AddEmployee = () => {
 
             </div>
 
-            <button type="submit" disabled={loading} className="mt-6 bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 font-bold py-2 cursor-pointer">{loading ? "Loading" : "Add Employee"}</button>
+            <button type="submit" disabled={loading} className="mt-6 bg-[#ff8349] hover:bg-[#ff8349] text-white p-2 rounded-md  font-bold py-2 cursor-pointer">{loading ? "Loading" : "Add Employee"}</button>
 
         </form>
       

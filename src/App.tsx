@@ -23,6 +23,8 @@ import LeaveTable from './components/leave/LeaveTable'
 import ViewLeave from './components/leave/ViewLeave'
 import Attendance from './components/attendance/Attendance'
 import AttendReport from './components/attendance/AttendReport'
+import ClockInOut from './components/attendance/ClockInOut'
+import AttendanceHistory from './components/attendance/AttendanceHistory'
 
 function App() {
 
@@ -73,6 +75,8 @@ function App() {
       <Route path='/employee-dashboard/leaves/:id' element={<LeaveList />}></Route>
       <Route path='/employee-dashboard/add-leave' element={<AddLeave />}></Route>
       <Route path='/employee-dashboard/salary/:id' element={<ViewSalary />}></Route>
+      <Route path='/employee-dashboard/clock-in-out' element={<ClockInOut />}></Route>
+      <Route path='/employee-dashboard/attendance-history' element={<AttendanceHistory />}></Route>
       <Route path='/employee-dashboard/setting' element={<Setting />}></Route>
       </Route>
     </Routes>

@@ -81,3 +81,20 @@ export interface Leave{
     status: string;
     appliedAt: string;
 }
+
+export interface AttendanceStatus {
+    _id?: string;
+    clockIn: string | null;
+    clockOut: string | null;
+    totalHours: number;
+    date: string;
+}
+
+export interface AttendanceRecord {
+    _id: string;
+    date: string;
+    clockIn: string;
+    clockOut: string;
+    totalHours: number;
+    status: string;
+}

@@ -8,6 +8,7 @@ const Attendance = () => {
     const [attendance, setAttendance] = useState<any[]>([])
     const [loading, setLoading] = useState(false);
     const [filterAttendance, setFilterAttendance] = useState<any[]>([])
+    const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
 
     const statusChange = () => {
         fetchAttendance()
@@ -18,7 +19,7 @@ const Attendance = () => {
         const token = localStorage.getItem("token")
         try {
             // Fetch department data from API and set it to state
-            const response = await axios.get("http://localhost:3000/api/attendance", {
+            const response = await axios.get(`http://localhost:3000/api/attendance?date=${selectedDate}`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -32,7 +33,10 @@ const Attendance = () => {
                         sno: sno++,
                         dep_name: att.employeeId.department?.dep_name || "Null",
                         name: att.employeeId.userId.name,
-                        action: (<AttendanceHelper status={att.status} employeeId={att.employeeId.employeeId} statusChange={statusChange}/>),
+                        clockIn: att.clockIn ? new Date(att.clockIn).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : 'N/A',
+                        clockOut: att.clockOut ? new Date(att.clockOut).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : 'N/A',
+                        totalHours: att.totalHours ? `${att.totalHours.toFixed(2)} hrs` : '0.00 hrs',
+                        action: (<AttendanceHelper status={att.status} employeeId={att.employeeId.employeeId} statusChange={statusChange} date={selectedDate}/>),
                     }
                 ))
                 setAttendance(data)
@@ -50,9 +54,8 @@ const Attendance = () => {
     }
 
     useEffect(() => {
-    
     fetchAttendance();
-    }, [])
+    }, [selectedDate])
 
     //to filter data on search based on dept name
     const handleFilterAttendance = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,6 +78,17 @@ const Attendance = () => {
                 <p className="text-2xl">
                     Mark Employees for <span className="font-bold">{new Date().toISOString().split("T")[0]}{" "}</span>
                 </p>
+
+                {/* Date Picker */}
+                <div className="flex items-center gap-3">
+                    <label className="font-semibold text-gray-700">Select Date:</label>
+                    <input 
+                        type="date" 
+                        value={selectedDate}
+                        onChange={(e) => setSelectedDate(e.target.value)}
+                        className="px-4 py-2 border rounded"
+                    />
+                </div>
 
                 <Link to="/admin-dashboard/attendance-report" className="px-4 py-1 bg-[#ff8349] rounded text-white">Attendance Report</Link>
             </div>
