@@ -33,7 +33,7 @@ export const clockColumns = (shiftInfo: EmployeeShiftInfo | null) => [
         },
         {
             name: 'Expected Hours',
-            selector: (row: AttendanceRecord) => shiftInfo?.estimatedWorkHours || 0,
+            selector: () => shiftInfo?.estimatedWorkHours || 0,
             format: () => (
                 <span className="font-semibold text-gray-600">
                     {shiftInfo?.estimatedWorkHours?.toFixed(2) || '0.00'} hrs
@@ -92,7 +92,8 @@ export const formatDate = (date: Date) => {
     };
 
 export const formatClock = (date: string | null) => {
-    return date = new Date().toLocaleTimeString("en-US", {
+    if (!date) return "Not clocked";
+    return new Date(date).toLocaleTimeString("en-US", {
             hour: "2-digit",
             minute: "2-digit",
             second: "2-digit"
