@@ -12,6 +12,8 @@ const EditEmployee = () => {
     const [departments, setDepartments] = useState<any[]>([])
     const [loading, setLoading] = useState(true);
 
+    const [estimatedHours, setEstimatedHours] = useState<number>(8);
+
      useEffect(() => {
             const getDepartments = async () => {
                 const departments = await fetchDepartments();
@@ -35,6 +37,15 @@ const EditEmployee = () => {
             console.log(response.data)
             if(response.data.success) {
                setEmployee(response.data.employee)
+
+               // ✅ Calculate initial estimated hours if shift times exist
+                    if (response.data.employee.shiftStartTime && response.data.employee.shiftEndTime) {
+                        const hours = calculateHours(
+                            response.data.employee.shiftStartTime,
+                            response.data.employee.shiftEndTime
+                        );
+                        setEstimatedHours(hours);
+                    }
             }
         } catch (error) {
             console.log(error)
@@ -47,6 +58,30 @@ const EditEmployee = () => {
     }
     fetchEmployees();
     }, [])
+
+    // Calculate hours when shift times change
+    useEffect(() => {
+        if (employee?.shiftStartTime && employee?.shiftEndTime) {
+            const hours = calculateHours(employee.shiftStartTime, employee.shiftEndTime);
+            setEstimatedHours(hours);
+        }
+    }, [employee?.shiftStartTime, employee?.shiftEndTime]);
+
+    // Helper function to calculate hours
+    const calculateHours = (startTime: string, endTime: string): number => {
+        const [startHour, startMin] = startTime.split(':').map(Number);
+        const [endHour, endMin] = endTime.split(':').map(Number);
+        
+        const startMinutes = startHour * 60 + startMin;
+        const endMinutes = endHour * 60 + endMin;
+        
+        let diffMinutes = endMinutes - startMinutes;
+        if (diffMinutes < 0) {
+            diffMinutes += 24 * 60; // Handle overnight shifts
+        }
+        
+        return diffMinutes / 60;
+    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const {name, value} = e.target
@@ -92,7 +127,9 @@ const EditEmployee = () => {
             maritalStatus: employee.maritalStatus,
             designation: employee.designation,
             salary: employee.salary,
-            department: employee.department._id
+            department: employee.department._id,
+             shiftStartTime: employee.shiftStartTime, 
+            shiftEndTime: employee.shiftEndTime, 
         }
 
         console.log("Sending update data:", updateData);
@@ -162,15 +199,52 @@ const EditEmployee = () => {
             </div>
 
             {/* Department */}
-            <div className="col-span-2">
+            <div className="">
                 <label htmlFor="" className="block text-sm font-medium text-gray-700">Department</label>
-                <select name="department" id="" value={employee.department._id} onChange={handleChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
+                <select name="department" id="" value={employee.department?._id} onChange={handleChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
                     <option value="">Select Department</option>
                     {departments.map(dep => (
-                        <option key={dep._id} value={dep._id}>{dep.dep_name}</option>
+                        <option key={dep._id} value={dep._id}>{dep?.dep_name}</option>
                     ))}
                     
                 </select>
+            </div>
+
+            {/* Shift Start Time */}
+             <div>
+                 <label className="block text-sm font-medium text-gray-700">Shift Start Time </label>
+                 <input 
+                     type="time" 
+                     name="shiftStartTime" 
+                     value={employee?.shiftStartTime}
+                     onChange={handleChange} 
+                     className="mt-1 p-2 block w-full border border-gray-300 rounded-md" 
+                     required 
+                 />
+             </div>
+
+            {/* Shift End Time */}
+            <div>
+                <label className="block text-sm font-medium text-gray-700">Shift End Time</label>
+                <input 
+                    type="time" 
+                    name="shiftEndTime" 
+                    value={employee.shiftEndTime}
+                    onChange={handleChange} 
+                    className="mt-1 p-2 block w-full border border-gray-300 rounded-md" 
+                    required 
+                />
+            </div>
+
+            {/* Estimated Hours (Disabled) */}
+            <div>
+                <label className="block text-sm font-medium text-gray-700">Estimated Work Hours </label>
+                <input 
+                    type="text" 
+                    value={`${estimatedHours.toFixed(2)} hours`}
+                    className="mt-1 p-2 block w-full border border-gray-300 rounded-mbg-gray-100" 
+                    disabled 
+                />
             </div>
 
             </div>

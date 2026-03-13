@@ -9,7 +9,7 @@ const Navbar = () => {
     return (
         <div className="flex justify-between h-12 bg-[#ff8349] px-5">
             <p className=" px-0 py-3 text-white">Welcome {user?.name}</p>
-            <button className="px-4 py-1 bg-[#ff8349] hover:bg-[#ff8349] text-white" onClick={logout}>Logout</button>
+            <button className="px-4 py-1 bg-[#ff8349] hover:bg-[#ff8349] text-white cursor-pointer" onClick={logout}>Logout</button>
         </div>
     )
 }

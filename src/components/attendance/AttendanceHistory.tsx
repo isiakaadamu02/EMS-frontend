@@ -1,13 +1,48 @@
 //employee
 import { useEffect, useState } from "react";
-import type { AttendanceRecord } from "../../interface";
+import type { AttendanceRecord, EmployeeShiftInfo } from "../../interface";
 import axios from "axios";
 import DataTable from "react-data-table-component";
 import { clockColumns } from "../../utils/ClockHelper.tsx";
 
+
 const AttendanceHistory = () => {
     const [history, setHistory] = useState<AttendanceRecord[]>([]);
     const [loading, setLoading] = useState(false);
+    const [shiftInfo, setShiftInfo] = useState<EmployeeShiftInfo | null>(null);
+
+    const fetchShiftInfo = async () => {
+        
+        const token = localStorage.getItem("token");
+        const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+        console.log("Checking user:", user); //  Debug line
+    
+        // Wait for user to be available
+        if (!user || !user._id) {
+            console.log("User not loaded yet or no user ID");
+            // Set default shift info
+            setShiftInfo({
+                estimatedWorkHours: 8
+            });
+            return;
+        }
+        
+        try {
+            const response = await axios.get(`http://localhost:3000/api/employee/${user._id}`, {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+            
+            if (response.data.success) {
+                console.log(" Shift info received:", response.data.employee.estimatedWorkHours);
+                setShiftInfo({
+                    estimatedWorkHours: response.data.employee.estimatedWorkHours
+                });
+            }
+        } catch (error) {
+            console.error("Error fetching shift info:", error);
+        }
+    };
 
     const fetchHistory = async () => {
         setLoading(true);
@@ -32,6 +67,7 @@ const AttendanceHistory = () => {
 
     useEffect(() => {
         fetchHistory();
+        fetchShiftInfo();
     }, []);
 
     // Calculate statistics
@@ -66,7 +102,7 @@ const AttendanceHistory = () => {
                     <div className="text-center py-10">Loading...</div>
                 ) : history.length > 0 ? (
                     <DataTable
-                        columns={clockColumns}
+                        columns={clockColumns(shiftInfo)}
                         data={history}
                         pagination
                         paginationPerPage={10}

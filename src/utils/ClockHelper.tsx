@@ -1,6 +1,6 @@
-import type { AttendanceRecord } from "../interface";
+import type { AttendanceRecord, EmployeeShiftInfo } from "../interface";
 
-export const clockColumns = [
+export const clockColumns = (shiftInfo: EmployeeShiftInfo | null) => [
         {
             name: 'Date',
             selector: (row: AttendanceRecord) => row.date,
@@ -30,6 +30,30 @@ export const clockColumns = [
             ),
             sortable: true,
             width: '130px'
+        },
+        {
+            name: 'Expected Hours',
+            selector: (row: AttendanceRecord) => shiftInfo?.estimatedWorkHours || 0,
+            format: () => (
+                <span className="font-semibold text-gray-600">
+                    {shiftInfo?.estimatedWorkHours?.toFixed(2) || '0.00'} hrs
+                </span>
+            ),
+            width: '130px'
+        },
+        {
+            name: 'Difference',
+            selector: (row: AttendanceRecord) => row.totalHours - (shiftInfo?.estimatedWorkHours || 0),
+            format: (row: AttendanceRecord) => {
+                const diff = row.totalHours - (shiftInfo?.estimatedWorkHours || 0);
+                return (
+                    <span className={`font-bold ${diff >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        {diff >= 0 ? '+' : ''}{diff.toFixed(2)} hrs
+                    </span>
+                );
+            },
+            sortable: true,
+            width: '110px'
         },
         {
             name: 'Status',
@@ -66,3 +90,11 @@ export const formatDate = (date: Date) => {
             day: "numeric"
         });
     };
+
+export const formatClock = (date: string | null) => {
+    return date = new Date().toLocaleTimeString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        });
+}

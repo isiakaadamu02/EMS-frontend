@@ -29,6 +29,8 @@ export interface EmployeeFormData {
     salary: string;
     password: string;
     role: string;
+    shiftStartTime: string;
+    shiftEndTime: string;
     image: File | null;
     [key: string]: any; // This allows string indexing
 }
@@ -51,6 +53,9 @@ export interface Employee {
         _id: string;
         dep_name: string;
     };
+    shiftStartTime: string;
+    shiftEndTime: string;
+    estimatedWorkHours: number;
 }
 
 export interface Salary{
@@ -90,6 +95,12 @@ export interface AttendanceStatus {
     date: string;
 }
 
+export interface EmployeeShiftInfo {
+    shiftStartTime?: string;
+    shiftEndTime?: string;
+    estimatedWorkHours?: number;
+}
+
 export interface AttendanceRecord {
     _id: string;
     date: string;
@@ -97,4 +108,7 @@ export interface AttendanceRecord {
     clockOut: string;
     totalHours: number;
     status: string;
+    shiftStartTime: string;      
+    shiftEndTime: string;        
+    estimatedWorkHours: number;  
 }

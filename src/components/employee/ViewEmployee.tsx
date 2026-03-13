@@ -15,7 +15,7 @@ const ViewEmployee = () => {
         const token = localStorage.getItem("token")
         try {
             // Fetch employee data from API and set it to state
-            const response = await axios.get(`https://ems-server-cyan.vercel.app/api/employee/${id}`, {
+            const response = await axios.get(`http://localhost:3000/api/employee/${id}`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -68,32 +68,32 @@ const ViewEmployee = () => {
       <div>
         <div className="flex space-x-3 mb-2">
             <p className="text-lg font-bold">Name: </p>
-            <p className="font-medium py-1">{employee.userId.name}</p>
+            <p className="font-medium py-1">{employee.userId.name || "N/A"}</p>
         </div>
 
         <div className="flex space-x-3 mb-2">
             <p className="text-lg font-bold">Employee ID: </p>
-            <p className="font-medium py-1">{employee.employeeId}</p>
+            <p className="font-medium py-1">{employee.employeeId || "N/A"}</p>
         </div>
 
         <div className="flex space-x-3 mb-2">
             <p className="text-lg font-bold">Date of Birth: </p>
-            <p className="font-medium py-0.5">{new Date(employee.dob).toLocaleDateString()}</p>
+            <p className="font-medium py-0.5">{new Date(employee.dob).toLocaleDateString() || "N/A"}</p>
         </div>
 
         <div className="flex space-x-3 mb-2">
             <p className="text-lg font-bold">Gender: </p>
-            <p className="font-medium py-0.5">{employee.gender}</p>
+            <p className="font-medium py-0.5">{employee.gender || "N/A"}</p>
         </div>
 
         <div className="flex space-x-3 mb-2">
             <p className="text-lg font-bold">Department: </p>
-            <p className="font-medium py-1">{employee.department.dep_name}</p>
+            <p className="font-medium py-1">{employee.department?.dep_name || "N/A"}</p>
         </div>
 
         <div className="flex space-x-3 mb-2">
             <p className="text-lg font-bold">Marital Status: </p>
-            <p className="font-medium py-1">{employee.maritalStatus}</p>
+            <p className="font-medium py-1">{employee.maritalStatus || "N/A"}</p>
         </div>
       </div>
     </div>

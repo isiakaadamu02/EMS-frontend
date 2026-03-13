@@ -21,7 +21,12 @@ const AddEmployee = () => {
     password: "",
     role: "",
     image:  null,
-    })
+    shiftStartTime: "09:00",
+    shiftEndTime: "17:00"
+    });
+
+    // Calculate estimated hours
+    const [estimatedHours, setEstimatedHours] = useState<number>(8);
 
     useEffect(() => {
         const getDepartments = async () => {
@@ -32,6 +37,23 @@ const AddEmployee = () => {
         getDepartments()
     }, [])
 
+    // Calculate hours when shift times change
+    useEffect(() => {
+        if (formData.shiftStartTime && formData.shiftEndTime) {
+            const [startHour, startMin] = formData.shiftStartTime.split(':').map(Number);
+            const [endHour, endMin] = formData.shiftEndTime.split(':').map(Number);
+            
+            const startMinutes = startHour * 60 + startMin;
+            const endMinutes = endHour * 60 + endMin;
+            
+            let diffMinutes = endMinutes - startMinutes;
+            if (diffMinutes < 0) {
+                diffMinutes += 24 * 60; // Handle overnight shifts
+            }
+            
+            setEstimatedHours(diffMinutes / 60);
+        }
+    }, [formData.shiftStartTime, formData.shiftEndTime]);
 
     const handleChange = (e: any) => {
         const {name, value, files} = e.target
@@ -162,6 +184,43 @@ const AddEmployee = () => {
                     ))}
                     
                 </select>
+            </div>
+
+            {/* Shift Start Time */}
+             <div>
+                 <label className="block text-sm font-medium text-gray-700">Shift Start Time </label>
+                 <input 
+                     type="time" 
+                     name="shiftStartTime" 
+                     value={formData.shiftStartTime}
+                     onChange={handleChange} 
+                     className="mt-1 p-2 block w-full border border-gray-300 rounded-md" 
+                     required 
+                 />
+             </div>
+
+            {/* Shift End Time */}
+            <div>
+                <label className="block text-sm font-medium text-gray-700">Shift End Time</label>
+                <input 
+                    type="time" 
+                    name="shiftEndTime" 
+                    value={formData.shiftEndTime}
+                    onChange={handleChange} 
+                    className="mt-1 p-2 block w-full border border-gray-300 rounded-md" 
+                    required 
+                />
+            </div>
+
+            {/* Estimated Hours (Disabled) */}
+            <div>
+                <label className="block text-sm font-medium text-gray-700">Estimated Work Hours </label>
+                <input 
+                    type="text" 
+                    value={`${estimatedHours.toFixed(2)} hours`}
+                    className="mt-1 p-2 block w-full border border-gray-300 rounded-mbg-gray-100" 
+                    disabled 
+                />
             </div>
 
             {/* Salary */}

@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../context/authContext";
 import axios from "axios";
 import { formatDate, formatTime } from "../../utils/ClockHelper";
-import type { AttendanceStatus } from "../../interface";
+import type { AttendanceStatus, EmployeeShiftInfo } from "../../interface";
 
 const ClockInOut = () => {
     const { user } = useAuth();
     const [attendance, setAttendance] = useState<AttendanceStatus | null>(null);
     const [loading, setLoading] = useState(false);
     const [currentTime, setCurrentTime] = useState(new Date());
+    const [shiftInfo, setShiftInfo] = useState<EmployeeShiftInfo | null>(null);
 
     // Update current time every second
     useEffect(() => {
@@ -19,6 +20,27 @@ const ClockInOut = () => {
         
         return () => clearInterval(timer);
     }, []);
+
+    //Fetch employee shift information
+    const fetchShiftInfo = async () => {
+        const token = localStorage.getItem("token");
+        try {
+            const response = await axios.get(`http://localhost:3000/api/employee/${user?._id}`, {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+            
+            if (response.data.success) {
+                const employee = response.data.employee;
+                setShiftInfo({
+                    shiftStartTime: employee.shiftStartTime,
+                    shiftEndTime: employee.shiftEndTime,
+                    estimatedWorkHours: employee.estimatedWorkHours
+                });
+            }
+        } catch (error) {
+            console.error("Error fetching shift info:", error);
+        }
+    };
 
     // Fetch today's attendance status
     const fetchTodayAttendance = async () => {
@@ -41,6 +63,7 @@ const ClockInOut = () => {
 
     useEffect(() => {
         fetchTodayAttendance();
+        fetchShiftInfo();
     }, []);
 
     const handleClockIn = async () => {
@@ -110,6 +133,29 @@ const ClockInOut = () => {
             <p className="text-lg">{formatDate(currentTime)}</p>
             <p className="text-4xl font-mono mt-2">{currentTime.toLocaleTimeString('en-US')}</p>
         </div>
+
+        {/* Shift Information Card */}
+            {shiftInfo && (
+                <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+                    <h2 className="text-xl font-bold mb-4 text-gray-800">Your Shift Schedule</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="bg-indigo-50 border-2 border-indigo-200 rounded-lg p-4">
+                            <p className="text-sm text-gray-600 mb-1">Shift Start</p>
+                            <p className="text-2xl font-bold text-indigo-700">{shiftInfo.shiftStartTime}</p>
+                        </div>
+
+                        <div className="bg-purple-50 border-2 border-purple-200 rounded-lg p-4">
+                            <p className="text-sm text-gray-600 mb-1">Shift End</p>
+                            <p className="text-2xl font-bold text-purple-700">{shiftInfo.shiftEndTime}</p>
+                        </div>
+
+                        <div className="bg-pink-50 border-2 border-pink-200 rounded-lg p-4">
+                            <p className="text-sm text-gray-600 mb-1">Estimated Hours</p>
+                            <p className="text-2xl font-bold text-pink-700">{shiftInfo.estimatedWorkHours?.toFixed(2)} hrs</p>
+                        </div>
+                    </div>
+                </div>
+            )}
 
         {/* Clock Status Card */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">

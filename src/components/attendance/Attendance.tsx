@@ -36,6 +36,14 @@ const Attendance = () => {
                         clockIn: att.clockIn ? new Date(att.clockIn).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : 'N/A',
                         clockOut: att.clockOut ? new Date(att.clockOut).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : 'N/A',
                         totalHours: att.totalHours ? `${att.totalHours.toFixed(2)} hrs` : '0.00 hrs',
+                        shiftStart: att.employeeId?.shiftStartTime || 'N/A',
+                    shiftEnd: att.employeeId?.shiftEndTime || 'N/A',
+                    estimatedHours: att.employeeId?.estimatedWorkHours ? `${att.employeeId.estimatedWorkHours.toFixed(2)} hrs` : '0.00 hrs',
+                    
+                    difference: att.totalHours && att.employeeId?.estimatedWorkHours 
+                        ? ((att.totalHours - att.employeeId.estimatedWorkHours >= 0 ? '+' : '') + 
+                           (att.totalHours - att.employeeId.estimatedWorkHours).toFixed(2) + ' hrs')
+                        : '0.00 hrs',
                         action: (<AttendanceHelper status={att.status} employeeId={att.employeeId.employeeId} statusChange={statusChange} date={selectedDate}/>),
                     }
                 ))

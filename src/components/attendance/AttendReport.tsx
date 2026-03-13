@@ -1,11 +1,18 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
+import { formatClock, formatTime } from "../../utils/ClockHelper";
 
 interface AttendanceRecord {
     employeeId: string;
     employeeName: string;
     departmentName: string;
     status: string;
+    clockIn: string | null;
+    clockOut: string | null;
+    totalHours: string;
+    shiftStartTime: string;
+    shiftEndTime: string;  
+    estimatedWorkHours: string;
 }
 
 interface GroupedReport {
@@ -66,6 +73,8 @@ const AttendReport = () => {
         setSkip((prevSkip) => prevSkip + limit)
     }
 
+    
+
   return (
     <div className="min-h-screen p-10 bg-white">
       <h2 className="text-center text-2xl font-bold">Attendance Report</h2>
@@ -90,6 +99,14 @@ const AttendReport = () => {
                 <th>Employee ID</th>
                 <th>Name</th>
                 <th>Department</th>
+
+                {/* <th>Shift</th> */}
+                <th>Clock In</th>
+                <th>Clock Out</th>
+                <th>Total Hours</th>
+                <th>Expected</th>
+                
+
                 <th>Status</th>
             </tr>
         </thead>
@@ -102,6 +119,14 @@ const AttendReport = () => {
                         <td>{data.employeeId}</td>
                         <td>{data.employeeName}</td>
                         <td>{data.departmentName}</td>
+
+                        {/* <td>{data.shiftStartTime} - {data.shiftEndTime}</td> */}
+                        <td>{formatClock(data.clockIn)}</td>
+                        <td>{formatClock(data.clockOut)}</td>
+                        <td>{data.totalHours}</td>
+                        <td>{data.estimatedWorkHours}</td>
+                        
+                        
                         <td>{data.status}</td>
                     </tr>
             
