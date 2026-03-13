@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
-import { formatClock, formatTime } from "../../utils/ClockHelper";
+import { formatClock } from "../../utils/ClockHelper";
 
 interface AttendanceRecord {
     employeeId: string;
